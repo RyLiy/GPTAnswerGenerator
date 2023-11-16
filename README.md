@@ -1,4 +1,4 @@
-"# GPTAnswerGenerator" 
+# GPTAnswerGenerator
 Javascript backend using ExpressJS.
 Provides multiple API routes for asking questions to OpenAI models, then storing responses/data into a MongoDB database.
 
