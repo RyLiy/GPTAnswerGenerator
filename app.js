@@ -1,11 +1,26 @@
+require("dotenv").config();
+const rateSpeedLimiterPackage = require("express-slow-down");
 var express = require('express');
 
 var indexRouter = require('./routes/index');
 var dbRouter = require('./routes/db');
-var gpt3Router = require('./routes/gpt3');
-var apiRouter = require('./routes/API');
+var gpt3Router = require('./routes/openai');
 
 var app = express();
+
+
+// allow 16 reqs/min, reqs after that are delayed by 60300
+const rateSpeedLimit = rateSpeedLimiterPackage.slowDown({
+    delayAfter: 10, // slow down limit (in reqs)
+    windowMs:  1 * 60 * 1000, // time where limit applies -1 min
+    delayMs: (hits) => hits * hits * 2100, // slow down time
+    maxDelayMs: 10300 //max delay time
+  
+  });
+
+//Use to parse text body from post requests
+app.use(express.text())
+
 //Set view engine
 app.set('view engine', 'jade');
 
@@ -21,11 +36,10 @@ app.use('/', indexRouter);
 //Using DB API
 app.use('/db', dbRouter);
 
-//testing
-app.use('/gpt3', gpt3Router);
+//Using GPT4 API. rateSpeedLimit applies speed delay to avoid rate limiting
+app.use('/openai', gpt3Router);
 
-//API
-app.use('/API', apiRouter);
+
 
 
 app.listen(3000, () => {
