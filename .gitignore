@@ -3051,3 +3051,4 @@ node_modules/web-streams-polyfill/polyfill/es5/package.json
 node_modules/web-streams-polyfill/types/polyfill.d.ts
 node_modules/web-streams-polyfill/types/ponyfill.d.ts
 node_modules/web-streams-polyfill/types/tsdoc-metadata.json
+.vercel
