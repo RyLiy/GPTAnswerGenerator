@@ -1,6 +1,7 @@
 require("dotenv").config();
 const rateSpeedLimiterPackage = require("express-slow-down");
 var express = require('express');
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var dbRouter = require('./routes/db');
@@ -27,9 +28,8 @@ app.set('view engine', 'jade');
 //parses incoming JSON requests and puts the parsed data in req.body.
 app.use(express.json());
 
-//css
-//app.use('/css',express.static(__dirname +'/css'));
-
+//cors
+app.use(cors({ origin: true, credentials: true }));
 //Using index page
 app.use('/', indexRouter);
 
